@@ -4,6 +4,8 @@ package com.qualitystream.exam;
 
 import static org.junit.Assert.*;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.After;
@@ -21,18 +23,38 @@ public class SearchBatman {
 	
 	@Before
 	
-	public void setup () {
+	public void setup () throws IOException {
 		
-        System.setProperty("webdriver.chrome.driver", "C:\\Users\\bombo\\eclipse-workspace\\.metadata\\QualityStreamExam\\src\\test\\resources\\chomedriver\\chromedriver.exe");
-		driver = new ChromeDriver();
-		driver.manage().window().maximize();
-		driver.get("http://localhost:3000/shows");
+		// Inicialización del driver por sistema operativo //
 		
+		String chromedriverPath="";
+		if(System.getProperty("os.name").toLowerCase().contains("win")) {
+			chromedriverPath="windows/chromedriver.exe";
+		}
+		else if (System.getProperty("os.name").toLowerCase().contains("mac")) {
+			chromedriverPath="mac/chromedriver";
+		}
+		else {
+			chromedriverPath="linux/chromedriver";
+		}
+		
+		System.out.println("El path de chrome esta: " + chromedriverPath );
+		
+		System.setProperty("webdriver.chrome.driver", new File("./src/test/resources/chomedriver/" + chromedriverPath).getCanonicalPath());
+		
+		
+	
+		 driver = new ChromeDriver();
+		 driver.manage().window().maximize();
+		 driver.get("http://localhost:3000/shows");
 	}
+	
+	// Busqueda de la tarjeta e identificación del elemento //
 	
 	@Test
 	 
-	public void testGuitarInventoryPage() {
+
+	public void testGuitarInventoryPage() throws InterruptedException {
 		WebElement searchbox = driver.findElement(By.name("search"));
 		
 		searchbox.clear ();
@@ -43,11 +65,11 @@ public class SearchBatman {
 		assertEquals("Guitar Inventory", driver.getTitle());
 		driver.navigate().to("https://www.tvmaze.com/shows/975/batman");
 		driver.navigate().back();
-		//String color = driver.findElement(By.className("card light-blue darken-1")).getCssValue("background-color");
-		String color = driver.findElement(By.xpath("//div[@class='container']/child::div[4]")).getCssValue("background-color");
-		WebElement mydiv = driver.findElement(By.xpath("//div[@class='container']/child::div[4]"));
+		
+		String color = driver.findElement(By.xpath("//div[@class='container']/child::div[3]")).getCssValue("background-color");
+		WebElement mydiv = driver.findElement(By.xpath("//div[@class='container']/child::div[3]"));
 		JavascriptExecutor js = (JavascriptExecutor) ((JavascriptExecutor) driver).executeScript("arguments[0].style.backgroundColor = '#4a148c'", mydiv);
-	    driver.findElement(By.xpath("//div[@class='container']/child::a")).click();
+		driver.findElement(By.xpath("//div[@class='container']/child::a")).click();
 	   
 		
 		
@@ -55,9 +77,10 @@ public class SearchBatman {
 		
 	}
 	
+	
 	@After
 	public void tearDown() {
-		//driver.quit();
+	
 	}
 
 }

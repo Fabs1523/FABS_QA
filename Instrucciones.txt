@@ -1,0 +1,16 @@
+ *** Instrucciones  ****
+
+
+1. Ingresar a la url https://github.com/Fabs1523/FABS_QA
+2. Ir a main >> branches >> readme-edits
+3. Dar clic en code
+4. Dar clic en download ZIP
+5. Ir a la ubicación donde se descargo el proyecto
+6. Descomprimir el proyecto
+7. Abrir eclipse
+8. Ir a file >> import >> general >> Existing proyects in Workspac
+9. Dar clic en next
+10. Dar clic en browse >> buscar la carpeta donde se encuentra la carpeta del proyecto
+11. Selecciona la carpeta >> clic en finish
+12. Ir al proyecto QulaityStreamExam >> src/test/java >> com-qualitystream.exam 
+13. Dar clic derecho  en la clase SearchBatman.java >> run as >> Junit Test
